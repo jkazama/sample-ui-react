@@ -1,0 +1,9 @@
+.l-withdrawal-crud
+  .row.l-row
+    .col-md-4
+      Text(ref="absAmount" id="absAmount" placeholder="出金金額" suffix="円" message=owner.props.message)
+    .col-md-2
+      button.btn.btn-default.btn-block(onClick=owner.register.bind(owner)) 依頼する
+  .row.l-row
+    .col-md-12
+      .alert.alert-warning 出金依頼に関わる注記文言を記載。動作確認用サンプルなので導線なり重複依頼はルーズに。

@@ -1,0 +1,14 @@
+.l-withdrawal-list
+  .row
+    .col-md-12
+      .l-list-body.l-scrollable
+        ul.list-group
+          li.list-group-item.l-list-wait-row.l-center
+            i.fa.fa-spin.fa-spinner
+          each item in owner.props.items
+            li.list-group-item.clearfix(key=item.id)
+              Label(className="l-item l-item-day" type="day" value=item.requestDay)
+              .l-item.l-item-type
+                .label.label-default=item.statusType
+              Label(className="l-item l-item-currency" value=item.currency)
+              Label(className="l-item l-item-amount pull-right" type="amount" value=item.absAmount)
