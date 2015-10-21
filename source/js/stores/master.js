@@ -14,7 +14,7 @@ class LoginStore extends Store {
     }
   }
   checkLogin() {
-    this.apiPost("/account/loginStatus", {}, () => {
+    this.apiGet("/account/loginStatus", {}, () => {
       this.emitFinish(ActionTypes.CHECK_LOGIN, {logined: true})
     }, (xhr) => {
       this.emitFinish(ActionTypes.CHECK_LOGIN, {logined: false})
