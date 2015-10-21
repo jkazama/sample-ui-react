@@ -88,7 +88,7 @@ gulp.task "build:webpack", ->
   gulp.src(resource.src.webpack.babel)
     .pipe(webpackStream({
       entry: "#{paths.src.js}/main.js"
-      output: {filename: "main.js"}
+      output: {filename: "bundler.js"}
       watch: !production
       module:
         loaders: [

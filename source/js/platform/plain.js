@@ -56,13 +56,8 @@ export class Ajax {
     this.promiseGet(url, data).then((res) => {
       if (success) success(res.body)
     }).catch((err) => {
-      if (err.response) {
-        let xhr = err.response.xhr
-        this.handlePreFailure(xhr)
-        if (failure) failure(xhr)
-      } else {
-        Log.error(err)
-      }
+      this.handlePreFailure(err)
+      if (failure) failure(err)
     })
   }
   // POST形式のPromiseを返します。
@@ -81,13 +76,8 @@ export class Ajax {
     this.promisePost(url, data).then((res) => {
       if (success) success(res.body)
     }).catch((err) => {
-      if (err.response) {
-        let xhr = err.response.xhr
-        this.handlePreFailure(xhr)
-        if (failure) failure(xhr)
-      } else {
-        Log.error(err)
-      }
+      this.handlePreFailure(err)
+      if (failure) failure(err)
     })
   }
   // アップロード形式のPromiseを返します。
@@ -108,13 +98,8 @@ export class Ajax {
     this.promiseUpload(url, data).then((res) => {
       if (success) success(res.body)
     }).catch((err) => {
-      if (err.response) {
-        let xhr = err.response.xhr
-        this.handlePreFailure(xhr)
-        if (failure) failure(xhr)
-      } else {
-        Log.error(err)
-      }
+      this.handlePreFailure(err)
+      if (failure) failure(err)
     })
   }
   // 接続先URLパスを整形します。
@@ -122,23 +107,28 @@ export class Ajax {
   // リクエスト成功時の標準処理を行います。
   static handleSuccess(data) { Log.info(data) }
   // リクエスト失敗時の事前処理を行います。
-  static handlePreFailure(xhrObj) {
-    Log.warn(xhrObj)
-    switch(xhrObj.status) {
-      case 0:
-        Log.error('接続先が見つかりませんでした')
-        break
-      case 200:
-        Log.error('戻り値の解析に失敗しました。JSON形式で応答が返されているか確認してください')
-        break
-      case 400:
-        Log.warn(xhrObj.statusText)
-        break
-      case 401:
-        Log.error('機能実行権限がありません')
-        break
-      default:
-        Log.error(xhrObj.statusText)
+  static handlePreFailure(err) {
+    if (err.response) {
+      let xhr = err.response.xhr
+      Log.warn(xhr)
+      switch(xhr.status) {
+        case 0:
+          Log.error('接続先が見つかりませんでした')
+          break
+        case 200:
+          Log.error('戻り値の解析に失敗しました。JSON形式で応答が返されているか確認してください')
+          break
+        case 400:
+          Log.warn(xhr.statusText)
+          break
+        case 401:
+          Log.error('機能実行権限がありません')
+          break
+        default:
+          Log.error(xhr.statusText)
+      }
+    } else {
+      Log.error(err)
     }
   }
   // リクエスト失敗時の処理を行います。

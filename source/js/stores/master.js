@@ -16,15 +16,21 @@ class LoginStore extends Store {
   checkLogin() {
     this.apiGet("/account/loginStatus", {}, () => {
       this.emitFinish(ActionTypes.CHECK_LOGIN, {logined: true})
-    }, (xhr) => {
-      this.emitFinish(ActionTypes.CHECK_LOGIN, {logined: false})
+    }, (err) => {
+      if (err.response) {
+        this.emitFinish(ActionTypes.CHECK_LOGIN, {logined: false})
+      }
     })
   }
   login(data) {
     this.apiPost("/login", data, () => {
       this.emitFinish(ActionTypes.LOGIN)
-    }, (xhr) => {
-      this.emitError("ログインできませんでした。ID/パスワードに誤りが無いか確認してください。", [], Level.WARN)
+    }, (err) => {
+      if (err.response) {
+        this.emitError("ログインできませんでした。ID/パスワードに誤りが無いか確認してください。", [], Level.WARN)
+      } else {
+        this.emitError("要求処理に失敗しました。サーバ側に問題が発生した可能性があります。")
+      }
     })
   }
   logout() {

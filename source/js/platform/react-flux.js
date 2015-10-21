@@ -37,9 +37,7 @@ export class Store extends EventEmitter {
   }
   // APIへのGET処理を行います
   apiGet(path, data, success, failure = this.apiFailure) {
-    let target = success.bind(this)
-    let wrapSuccess = (data) => { success(data); this.emitFinish(data, "GET", path) }
-    Ajax.get(this.apiUrl(path), data, wrapSuccess, failure.bind(this))
+    Ajax.get(this.apiUrl(path), data, success.bind(this), failure.bind(this))
   }
   // APIへのPOST処理を行います
   apiPost(path, data, success, failure = this.apiFailure) {
@@ -56,19 +54,23 @@ export class Store extends EventEmitter {
   }
   // API実行時の標準例外ハンドリングを行います。
   apiFailure(error) {
-    switch (error.status) {
-      case 200:
-        this.emitError("要求処理は成功しましたが、戻り値の解析に失敗しました")
-        break
-      case 400:
-        let parsed = this.parseApiError(error)
-        this.emitError(parsed.global ? parsed.global : "入力情報を確認してください", parsed.columns, Level.WARN)
-        break
-      case 401:
-        this.emitError("機能実行権限がありません")
-        break
-      default:
-        this.emitError("要求処理に失敗しました")
+    if (err.response) {
+      switch (error.status) {
+        case 200:
+          this.emitError("要求処理は成功しましたが、戻り値の解析に失敗しました")
+          break
+        case 400:
+          let parsed = this.parseApiError(error)
+          this.emitError(parsed.global ? parsed.global : "入力情報を確認してください", parsed.columns, Level.WARN)
+          break
+        case 401:
+          this.emitError("機能実行権限がありません")
+          break
+        default:
+          this.emitError("要求処理に失敗しました")
+      }
+    } else {
+      this.emitError("要求処理に失敗しました。サーバ側に問題が発生した可能性があります。")
     }
   }
   parseApiError(error) {

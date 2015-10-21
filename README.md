@@ -9,8 +9,6 @@ sample-ui-react
 
 `※ライブラリではなく上記ライブラリを用いた単純な実装サンプルです。`
 
-> 現在作りかけです
-
 #### ビルド/テスト稼働環境構築
 
 ビルドは [Node.js](http://nodejs.jp/) + [Webpack](https://webpack.github.io/) + [Gulp](http://gulpjs.com/) で行います。以下の手順でインストールしてください。
@@ -40,14 +38,16 @@ sample-ui-react
 
 ### 開発の流れ
 
-基本的にAltリソース(.jade/.sass/.coffee[.vue])をWebリソース(.html/.css/.js)へGulpでリアルタイム変換させながら開発をしていきます。
+基本的にAltリソース(.jade/.scss/.js)をWebリソース(.html/.css/.js)へGulpでリアルタイム変換させながら開発をしていきます。
 動作確認はGulpで独自にWebサーバを立ち上げた後、ブラウザ上で行います。  
 
 #### Altリソースの解説
 
+Altリソースの考え方や記法については以下を参照してください。
+
 - [Jade](http://jade-lang.com/)
 - [Sass](http://sass-lang.com/)
-- [Babel](https://babeljs.io/)
+- [ES6 with Babel](https://babeljs.io/)
 
 #### Altリソースの変更監視 / Webサーバ起動
 
@@ -57,11 +57,17 @@ sample-ui-react
 
 - JS/CSSの外部ライブラリはbowerで管理する
     - グローバルスコープの汚染を許容する
+    - bowerが適切なサポートを提供していない時はpackage.json経由の管理(bundler.js側に展開)も許容
 - プロジェクト固有のJSはWebpackを利用して生成する
     - グローバルスコープの汚染を許容せずにモジュールベースで開発する
     - 外部ライブラリのアクセスは従来通りグローバルな名前空間を用いる
+- ReactはFluxのアーキテクチャを参考に実装する
+    - ページ遷移周りはReactRouterを利用
+    - ReactコンポーネントはES6のクラスベースで実装(see /js/platform/react.js)
+    - FluxはFacebookのサンプルを参考にしつつ実装(see /js/platform/react-flux.js)
+    - JSXはjade(templates)へ切り出してreact-jade経由で読込アプローチ(ここはベタ書きでも良いかも)
+    - いくつか代表的なUIパーツは準備(see /js/platform/react-ui.js)
 
 ### TODO
 
-- 色々細かい部分
-- ドキュメントリファクタ
+- ドキュメント/コメント記載
