@@ -70,7 +70,7 @@ gulp.task "bower", ->
       .pipe($.if(production, $.uglify()))
       .pipe(gulp.dest(paths.dist.js))
 
-# compile Webpack [ Babel / Vue -> SPA(main.js) ]
+# compile Webpack [ Babel -> SPA(bundler.js) ]
 gulp.task "build:webpack", ->
   process.env.NODE_ENV = if production is true then "production" else "development"
   plugins =
