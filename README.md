@@ -18,7 +18,6 @@ sample-ui-react
     - Macユーザは「`sudo npm install -g gulp`」で。
 1. コンソールで本ディレクトリ直下へ移動後、「`npm install`」を実行してGulpライブラリをインストール。
     - Windowsユーザは「npm install --msvs_version=2013」。理由は後述
-1. 「`gulp bower`」を実行してアプリケーションで利用する関連ライブラリをプリインストール。
 
 ---
 
