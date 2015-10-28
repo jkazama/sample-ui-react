@@ -54,7 +54,7 @@ export class Store extends EventEmitter {
   }
   // API実行時の標準例外ハンドリングを行います。
   apiFailure(error) {
-    if (err.response) {
+    if (error.response) {
       switch (error.status) {
         case 200:
           this.emitError("要求処理は成功しましたが、戻り値の解析に失敗しました")
@@ -74,7 +74,8 @@ export class Store extends EventEmitter {
     }
   }
   parseApiError(error) {
-    let errs = JSON.parse(error.responseText)
+    let xhr = error.response.xhr
+    let errs = JSON.parse(xhr.responseText)
     let parsed = {global: null, columns: []}
     Object.keys(errs).forEach((err) => {
       if (err) parsed.columns.push({key: err, values: errs[err]})

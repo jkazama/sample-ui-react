@@ -46,7 +46,7 @@ sample-ui-react
 Altリソースの考え方や記法については以下を参照してください。
 
 - [Jade](http://jade-lang.com/)
-- [Sass](http://sass-lang.com/)
+- [Sass (SCSS)](http://sass-lang.com/)
 - [ES6 with Babel](https://babeljs.io/)
 
 #### Altリソースの変更監視 / Webサーバ起動
