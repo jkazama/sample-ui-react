@@ -132,7 +132,7 @@ export class Ajax {
     }
   }
   // リクエスト失敗時の処理を行います。
-  static handleFailure(xhrObj) {
+  static handleFailure(err) {
     // nothing.
   }
 }
