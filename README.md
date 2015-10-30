@@ -84,20 +84,20 @@ sample-ui-react
 ディレクトリ構成については以下を参照してください。
 
 ```
-bower.json                           …　bowerが利用するライブラリ定義
+bower.json                           … bowerが利用するライブラリ定義
 gulpfile.coffee                      … gulp実行時に利用されるビルドファイル
-package.json                         …　node.jsがgulp実行時に利用するライブラリ定義
+package.json                         … node.jsがgulp実行時に利用するライブラリ定義
 public                               … 配布公開リソース(自動生成)
   css                                … CSS
     - style.css                      … source/css直下のリソース
-  fonts                              …　アイコンフォント
-  js                                 …　JavaScript(ES5)
+  fonts                              … アイコンフォント
+  js                                 … JavaScript(ES5)
     - bundler.js                     … source/js直下のリソース(Webpackで生成)
     - vendor.js                      … Bower経由の外部JSライブラリ
   index.html                         … source/html直下のリソース
 source
   css                                … CSSテンプレートファイル(SCSS)
-  html                               …　HTMLテンプレートファイル(Jade)
+  html                               … HTMLテンプレートファイル(Jade)
   js
     actions                          … Flux ActionCreators
     components                       … React Component
