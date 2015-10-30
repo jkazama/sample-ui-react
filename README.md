@@ -84,39 +84,39 @@ sample-ui-react
 ディレクトリ構成については以下を参照してください。
 
 ```
-bower.json                           … bowerが利用するライブラリ定義
-gulpfile.coffee                      … gulp実行時に利用されるビルドファイル
-package.json                         … node.jsがgulp実行時に利用するライブラリ定義
-public                               … 配布公開リソース(自動生成)
-  css                                … CSS
-    - style.css                      … source/css直下のリソース
-  fonts                              … アイコンフォント
-  js                                 … JavaScript(ES5)
-    - bundler.js                     … source/js直下のリソース(Webpackで生成)
-    - vendor.js                      … Bower経由の外部JSライブラリ
-  index.html                         … source/html直下のリソース
-source
-  css                                … CSSテンプレートファイル(SCSS)
-  html                               … HTMLテンプレートファイル(Jade)
+bower.json                           … bower dependency
+gulpfile.coffee                      … gulp configuration
+package.json                         … npm dependency
+public                               … deploy resources (auto generate)
+  css
+    - style.css                      … from source/css
+  fonts                              … icon font
   js
-    actions                          … Flux ActionCreators
-    components                       … React Component
+    - bundler.js                     … from source/js (by Webpack)
+    - vendor.js                      … from bower
+  index.html                         … from source/html
+source
+  css                                … css template files  [SCSS]
+  html                               … html template files [Jade]
+  js
+    actions                          … flux actionCreators
+    components                       … react component
     constants
-    dispatcher                       … Flux Dispatcher
+    dispatcher                       … flux dispatcher
     platform
-      - plain.js                     … プロジェクト内ライブラリ(依存無)
-      - react-flux.js                … Flux簡易実装
-      - react-ui.js                  … UIパーツに特化した React Component
-      - react.js                     … React Component のプロジェクト拡張
-    stores                           … Flux Store
-    templates                        … Jade to JSX
-    - app.js                         … ルートページ定義
-    - main.js                        … SPAにおけるEntryファイル
-    - routes.js                      … SPAルーティング定義
-  static                             … 画像等コンパイル不要な静的リソースファイル
+      - plain.js                     … simple js library
+      - react-flux.js                … react flux implementation (simple)
+      - react-ui.js                  … react ui parts
+      - react.js                     … project react extension
+    stores                           … flux store
+    templates                        … jade template (jsx)
+    - app.js                         … root page
+    - main.js                        … SPA entry
+    - routes.js                      … SPA routing
+  static                             … static resources (.png/.ico/robots.txt etc)
 ```
 
-※gulpコマンドを実行して変更監視を有効にしておくと、source配下のリソースを修正すると、リアルタイムでpublic直下のファイルが更新されていきます。
+※gulpコマンドを実行して変更監視を有効にしておくと、source配下のリソースを修正した際にリアルタイムでpublic直下のファイルが更新されていきます。
 
 ### 依存ライブラリ
 
