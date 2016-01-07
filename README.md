@@ -127,10 +127,10 @@ source
 | `eventEmitter`           | 4.3.+     | イベント連携ライブラリ |
 | `flux`                   | 2.1.+     | Facebook Fluxライブラリ |
 | `lodash` 　　　　　　　　　　　　  | 3.10.+    | 汎用ユーティリティライブラリ |
-| `moment` 　　　　　　　　　　　　  | 2.10.+    | 日時ライブラリ |
+| `moment` 　　　　　　　　　　　　  | 2.11.+    | 日時ライブラリ |
 | `bootstrap-sass-official` | 3.3.+    | CSSフレームワーク |
 | `bootstrap-datepicker`    | 1.4.+    | 日時入力ライブラリ |
-| `fontawesome`             | 4.4.+    | フォントアイコンライブラリ |
+| `fontawesome`             | 4.5.+    | フォントアイコンライブラリ |
 | `superagent` [npm]        | 1.4.+    | HTTP連携ライブラリ |
 | `react-mixin` [npm]       | 3.0.+    | Reactクラス利用時のMixin拡張 |
 
