@@ -101,7 +101,7 @@ gulp.task "build:webpack", ->
       watch: !production
       module:
         loaders: [
-          {test: /\.(js|jsx)$/, loader: "babel?blacklist[]=regenerator"}
+          {test: /\.(js|jsx)$/, loader: "babel?optional[]=runtime"}
           {test: /\.jade$/, loader: "react-jade-loader"}
         ]
       resolve:
