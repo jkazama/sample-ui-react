@@ -94,6 +94,7 @@ gulp.task "build:webpack", ->
         new webpack.optimize.DedupePlugin()
       ]
   gulp.src(resource.src.webpack.babel)
+    .pipe($.plumber())
     .pipe(webpackStream({
       entry: "#{paths.src.js}/main.js"
       output: {filename: "bundler.js"}
