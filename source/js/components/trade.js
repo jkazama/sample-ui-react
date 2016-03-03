@@ -1,3 +1,5 @@
+import React from "react"
+
 import {Component} from "platform/react"
 
 export default class Trade extends Component {

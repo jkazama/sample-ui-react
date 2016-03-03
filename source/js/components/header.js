@@ -1,11 +1,12 @@
-// Header
+import React from "react"
+
 import {Log} from "platform/plain"
 import {Component} from "platform/react"
 import {Logins} from "stores/master"
 import ActionTypes from "constants/master"
 import ActionCreators from "actions/master"
 
-const Link = ReactRouter.Link
+const Link = Component.routerLink()
 
 export default class Header extends Component {
   initialize() {
