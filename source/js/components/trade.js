@@ -1,8 +1,11 @@
 import {Component} from "platform/react"
-import dom from "templates/trade"
 
 export default class Trade extends Component {
   render() {
-    return dom(this.param())
+    return (
+      <div className="container">
+        <div className="alert alert-warning l-center">取引情報作成中</div>
+      </div>
+    )
   }
 }

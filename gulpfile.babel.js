@@ -116,16 +116,12 @@ gulp.task('build:webpack', () => {
       watch: !production,
       module: {
         loaders: [
-          {test: /\.(js|jsx)$/, loader: 'babel', query: {presets: ['es2015', 'react']}},
-          {test: /\.jade$/, loader: "react-jade-loader"}
+          {test: /\.(js|jsx)$/, loader: 'babel', query: {presets: ['es2015', 'react']}}
         ]
       },
       resolve: {
         modulesDirectories: ['node_modules', 'bower_components', paths.src.js],
         extensions: ['', '.js', ".jsx", ".jade"]
-      },
-      resolveLoader: {
-        modulesDirectories: ['node_modules', `${__dirname}/webpack/loaders`]
       },
       plugins: plugins
      }, webpack))
