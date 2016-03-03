@@ -1,8 +1,10 @@
-// React Router
-let RouteHandler = ReactRouter.RouteHandler
+import React from "react"
+import Router from "react-router"
 
 import {Component} from "platform/react"
 import Header from "components/header"
+
+const RouteHandler = Router.RouteHandler
 
 export default class App extends Component {
   render() {

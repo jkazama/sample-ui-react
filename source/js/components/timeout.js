@@ -1,8 +1,11 @@
+import React from "react"
+
 import {Component} from "platform/react"
+
+const Link = Component.routerLink()
 
 export default class Timeout extends Component {
   render() {
-    const Link = ReactRouter.Link
     return (
       <div className="col-xs-6 col-xs-offset-3">
         <div className="panel panel-default">

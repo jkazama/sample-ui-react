@@ -1,3 +1,5 @@
+import React from "react"
+
 import {Component} from "platform/react"
 import {Message, Text} from "platform/react-ui"
 import {Logins} from "stores/master"

@@ -1,9 +1,11 @@
+import React from "react"
+import ReactDOM from "react-dom"
+import Router from "react-router"
+import ReactMixin from 'react-mixin'
+
 import Param from "variables"
 import {Ajax} from "platform/plain"
 import * as ReactUI from "platform/react-ui"
-
-let Router = ReactRouter
-import ReactMixin from 'react-mixin'
 
 export class Component extends React.Component {
   constructor(props) {
@@ -16,6 +18,8 @@ export class Component extends React.Component {
     this.storeListeners = []
     this.initialize()
   }
+  static router() { return Router }
+  static routerLink() { return this.router().Link }
   initState() { return {} }
   initialize() { /* nothing. */ }
   forward(path) {

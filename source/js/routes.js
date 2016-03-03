@@ -1,4 +1,5 @@
-let Router = ReactRouter
+import React from "react"
+import Router from "react-router"
 let {Route, DefaultRoute, NotFoundRoute} = Router
 
 import App from "app"

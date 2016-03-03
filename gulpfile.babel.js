@@ -18,9 +18,8 @@ const paths = {
     css:  `${root.dist}/css`,
     font: `${root.dist}/fonts`
   },
-  bower: {
-    component: `${__dirname}/bower_components`,
-    file:      `${__dirname}/bower.json`
+  node: {
+    modules: `${__dirname}/node_modules`
   }
 }
 const resource = {
@@ -32,7 +31,14 @@ const resource = {
     },
     sass:   `${paths.src.css}/**/*.s+(a|c)ss`,
     static: `${paths.src.static}/**/*`,
-    font:   `${paths.bower.component}/fontawesome/fonts/**/*`
+  },
+  vendor: {
+    js: {
+      jquery:       `${paths.node.modules}/jquery/dist/jquery.js`,
+      bootstrap:    `${paths.node.modules}/bootstrap-sass/assets/javascripts/bootstrap.js`,
+      eventemitter: `${paths.node.modules}/wolfy87-eventemitter/EventEmitter.js`
+    },
+    fontawesome: `${paths.node.modules}/font-awesome/fonts/**/*`,
   }
 }
 
@@ -40,8 +46,6 @@ import gulp from 'gulp'
 import gulpLoaderPlugins from 'gulp-load-plugins'
 import del from 'del'
 import path from 'path'
-import bower from 'bower'
-import bowerFiles from 'main-bower-files'
 import webpack from 'webpack'
 import webpackStream from 'webpack-stream'
 import runSequence from 'run-sequence'
@@ -58,7 +62,7 @@ gulp.task('default', ['build', 'server'])
 
 //## build for developer
 gulp.task('build', (callback) =>
-  runSequence('clean', 'bower', ['build:jade', 'build:sass', 'build:webpack', 'build:static'], callback)
+  runSequence('clean', ['build:jade', 'build:sass', 'build:webpack', 'build:static'], callback)
 )
 
 //## build production
@@ -79,34 +83,10 @@ gulp.task('revision', (callback) =>
   runSequence('revision:clean', 'revision:append', 'clean', 'revision:copy', 'revision:clean', callback)
 )
 
-// build Vendor UI Library (bower.json) [Load/Concat]
-gulp.task('bower', () => {
-  bower.commands.install().on('end', () => {
-    const filterCss = ['**/bootstrap-datepicker3.css']
-    gulp.src(bowerFiles({filter: filterCss}))
-      .pipe($.concat('vendor.css'))
-      .pipe($.pleeease())
-      .pipe(gulp.dest(paths.dist.css))
-    gulp.src(resource.src.font)  // for font-awesome
-      .pipe(gulp.dest(paths.dist.font))
-    const filterJs = (file) => { // for bootstrap-sass-official
-      return /.*\.js/.test(file) && ($.slash(file).indexOf('/bootstrap/') == -1)
-    }
-    const appendJs = path.join(paths.bower.component, 'react/react-dom.js')
-    gulp.src(bowerFiles({filter: filterJs}).concat(appendJs))
-      .pipe($.concat('vendor.js'))
-      .pipe($.if(production, $.uglify()))
-      .pipe(gulp.dest(paths.dist.js))
-  })
-})
-
 // compile Webpack [ ES6(Babel) / Vue -> SPA(main.js) ]
 gulp.task('build:webpack', () => {
   process.env.NODE_ENV = (production == true) ? 'production' : 'development'
-  let plugins = [
-      new webpack.ResolverPlugin(new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin('bower.json', ['main'])),
-      new webpack.optimize.DedupePlugin()
-  ]
+  let plugins = [ new webpack.optimize.DedupePlugin() ]
   if (production) plugins.push(new webpack.optimize.UglifyJsPlugin({compress: { warnings: false　}}))
   gulp.src([resource.src.webpack.babel, resource.src.webpack.vue])
     .pipe($.plumber())
@@ -120,7 +100,7 @@ gulp.task('build:webpack', () => {
         ]
       },
       resolve: {
-        modulesDirectories: ['node_modules', 'bower_components', paths.src.js],
+        modulesDirectories: ['node_modules', paths.src.js],
         extensions: ['', '.js', ".jsx", ".jade"]
       },
       plugins: plugins
@@ -141,13 +121,9 @@ gulp.task('build:jade', () => {
 })
 
 // compile Sass -> CSS
-// check https://github.com/sasstools/sass-lint/pull/168
 gulp.task('build:sass', () => {
   gulp.src(resource.src.sass)
     .pipe($.plumber())
-    // .pipe($.sassLint())
-    // .pipe($.sassLint.format())
-    // .pipe($.sassLint.failOnError())
     .pipe($.sass())
     .pipe($.concat('style.css'))
     .pipe($.pleeease())
@@ -157,6 +133,13 @@ gulp.task('build:sass', () => {
 
 // copy Static Resource
 gulp.task('build:static', () => {
+  const libs = resource.vendor.js
+  gulp.src(Object.keys(libs).map((key) => libs[key]))
+    .pipe($.concat("vendor.js"))
+    .pipe($.if(production, $.uglify()))
+    .pipe(gulp.dest(paths.dist.js))
+  gulp.src(resource.vendor.fontawesome)
+    .pipe(gulp.dest(paths.dist.font))
   gulp.src(resource.src.static)
     .pipe(gulp.dest(paths.dist.root))
 })
@@ -168,7 +151,6 @@ gulp.task('server', () => {
     notify: false
   })
   // watch for source
-  gulp.watch(paths.bower.file,    ['bower'])
   gulp.watch(resource.src.jade,   ['build:jade'])
   gulp.watch(resource.src.sass,   ['build:sass'])
   gulp.watch(resource.src.static, ['build:static'])

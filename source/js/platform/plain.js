@@ -5,6 +5,7 @@
 
 import {Level} from 'constants/plain'
 import Param from 'variables'
+import dateFormat from 'dateformat'
 
 // ## ログユーティリティ
 // variables.jsでログ出力レベルを変更させる事が可能です。
@@ -167,7 +168,7 @@ export class Formatter {
   static format(type, value) {
     switch (type) {
       case "day":
-        return value ? moment(value).format("YYYY/MM/DD") : ""
+        return value ? dateFormat(value, "yyyy/mm/dd") : ""
       case "amount":
         return (value || value === 0) ? value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') : ""
       default:

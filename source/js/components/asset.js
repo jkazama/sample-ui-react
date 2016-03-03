@@ -1,10 +1,12 @@
+import React from "react"
+
 import {Component} from "platform/react"
 import {Message, Text, Label} from "platform/react-ui"
 import {CashInOuts} from "stores/asset"
 import ActionTypes from "constants/asset"
 import ActionCreators from "actions/asset"
 
-const Link = ReactRouter.Link
+const Link = Component.routerLink()
 
 // parent
 export default class Asset extends Component {
