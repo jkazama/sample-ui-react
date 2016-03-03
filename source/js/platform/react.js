@@ -69,11 +69,6 @@ export class Component extends React.Component {
       this.refValueSet(key, null)
     })
   }
-  param(appendItems = {}) {
-    let base = {owner: this, Link: Router.Link}
-    let ui = {Text: ReactUI.Text, Label: ReactUI.Label, Message: ReactUI.Message}
-    return Object.assign(base, ui, appendItems)
-  }
   // React Action
   componentDidMount() {
     this.storeListeners.forEach((v) => {
