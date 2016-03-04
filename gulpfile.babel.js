@@ -26,11 +26,10 @@ const resource = {
   src: {
     jade: `${paths.src.html}/**/*.jade`,
     webpack: {
-      babel: `${paths.src.js}/**/*.js`,
-      vue:   `${paths.src.js}/**/*.vue`
+      babel: `${paths.src.js}/**/*.(js|jsx)`
     },
     sass:   `${paths.src.css}/**/*.s+(a|c)ss`,
-    static: `${paths.src.static}/**/*`,
+    static: `${paths.src.static}/**/*`
   },
   vendor: {
     js: {
@@ -38,7 +37,7 @@ const resource = {
       bootstrap:    `${paths.node.modules}/bootstrap-sass/assets/javascripts/bootstrap.js`,
       eventemitter: `${paths.node.modules}/wolfy87-eventemitter/EventEmitter.js`
     },
-    fontawesome: `${paths.node.modules}/font-awesome/fonts/**/*`,
+    fontawesome: `${paths.node.modules}/font-awesome/fonts/**/*`
   }
 }
 
@@ -88,7 +87,7 @@ gulp.task('build:webpack', () => {
   process.env.NODE_ENV = (production == true) ? 'production' : 'development'
   let plugins = [ new webpack.optimize.DedupePlugin() ]
   if (production) plugins.push(new webpack.optimize.UglifyJsPlugin({compress: { warnings: false　}}))
-  gulp.src([resource.src.webpack.babel, resource.src.webpack.vue])
+  gulp.src(resource.src.webpack.babel)
     .pipe($.plumber())
     .pipe(webpackStream({
       entry: `${paths.src.js}/main.js`,
@@ -101,7 +100,7 @@ gulp.task('build:webpack', () => {
       },
       resolve: {
         modulesDirectories: ['node_modules', paths.src.js],
-        extensions: ['', '.js', ".jsx", ".jade"]
+        extensions: ['', '.js', ".jsx"]
       },
       plugins: plugins
      }, webpack))
