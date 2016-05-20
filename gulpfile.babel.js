@@ -87,7 +87,7 @@ gulp.task('build:webpack', () => {
   process.env.NODE_ENV = (production == true) ? 'production' : 'development'
   let plugins = [ new webpack.optimize.DedupePlugin() ]
   if (production) plugins.push(new webpack.optimize.UglifyJsPlugin({compress: { warnings: false　}}))
-  gulp.src(resource.src.webpack.babel)
+  return gulp.src(resource.src.webpack.babel)
     .pipe($.plumber())
     .pipe(webpackStream({
       entry: `${paths.src.js}/main.js`,
@@ -95,7 +95,7 @@ gulp.task('build:webpack', () => {
       watch: !production,
       module: {
         loaders: [
-          {test: /\.(js|jsx)$/, loader: 'babel', query: {presets: ['es2015', 'react']}}
+          {test: /\.(js|jsx)$/, loader: 'babel', exclude: /node_modules/}
         ]
       },
       resolve: {
@@ -110,7 +110,7 @@ gulp.task('build:webpack', () => {
 
 // compile Jade -> HTML
 gulp.task('build:jade', () => {
-  gulp.src(resource.src.jade)
+  return gulp.src(resource.src.jade)
     .pipe($.plumber())
     .pipe($.jade())
     .pipe($.htmlhint())
@@ -121,7 +121,7 @@ gulp.task('build:jade', () => {
 
 // compile Sass -> CSS
 gulp.task('build:sass', () => {
-  gulp.src(resource.src.sass)
+  return gulp.src(resource.src.sass)
     .pipe($.plumber())
     .pipe($.sass())
     .pipe($.concat('style.css'))
@@ -139,7 +139,7 @@ gulp.task('build:static', () => {
     .pipe(gulp.dest(paths.dist.js))
   gulp.src(resource.vendor.fontawesome)
     .pipe(gulp.dest(paths.dist.font))
-  gulp.src(resource.src.static)
+  return gulp.src(resource.src.static)
     .pipe(gulp.dest(paths.dist.root))
 })
 
@@ -156,18 +156,18 @@ gulp.task('server', () => {
 })
 
 // append Resource Revision
-gulp.task('revision:clean', () => {
+gulp.task('revision:clean', () =>
   del.sync([root.tmp], { force: true })
-})
+)
 
 gulp.task('revision:append', () => {
   let revAll = new RevAll({dontRenameFile: [/^\/favicon.ico$/g, '.html']})
-  gulp.src(`${paths.dist.root}/**/*`)
+  return gulp.src(`${paths.dist.root}/**/*`)
     .pipe(revAll.revision())
     .pipe(gulp.dest(root.tmp))
 })
 
 gulp.task('revision:copy', () => {
-  gulp.src(`${root.tmp}/**/*`)
+  return gulp.src(`${root.tmp}/**/*`)
     .pipe(gulp.dest(paths.dist.root))
 })
