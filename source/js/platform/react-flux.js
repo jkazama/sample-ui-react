@@ -4,6 +4,7 @@ import {Ajax} from "platform/plain"
 
 import Dispatcher from "dispatcher/dispatcher"
 import EventTypes from "constants/event"
+import EventEmitter from "wolfy87-eventemitter"
 
 // array to object[key: key]
 export function KeyMirror(arrays) {

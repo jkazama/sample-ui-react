@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import Router from "react-router"
+import {Router, Link, Navigation} from "react-router"
 import ReactMixin from 'react-mixin'
 
 import Param from "variables"
@@ -8,8 +8,8 @@ import {Ajax} from "platform/plain"
 import * as ReactUI from "platform/react-ui"
 
 export class Component extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor(props, context) {
+    super(props, context)
     let state = {
       message: {}
     }
@@ -19,11 +19,11 @@ export class Component extends React.Component {
     this.initialize()
   }
   static router() { return Router }
-  static routerLink() { return this.router().Link }
+  static routerLink() { return Link }
   initState() { return {} }
   initialize() { /* nothing. */ }
   forward(path) {
-    this.transitionTo(path)
+    this.context.router.transitionTo(path)
   }
   updateState(data) {
     if (!this.mounted) return
@@ -91,4 +91,8 @@ export class Component extends React.Component {
     this.mounted = false
   }
 }
-ReactMixin.onClass(Component, Router.Navigation)
+ReactMixin.onClass(Component, Navigation)
+Component.contextTypes = {
+    router: React.PropTypes.object
+}
+

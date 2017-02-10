@@ -81,7 +81,7 @@ export class Text extends Input {
     let classRow = this.props.row ? 'l-row ' : ''
     let className = `form-control ${classRow}${this.props.className}`
     let input = (
-      <input type='text' id={this.props.id} className={className} placeholder={this.props.placeholder} maxsize={this.props.maxsize} value={this.state.value} onChange={this.onChange.bind(this)} />
+      <input type='text' id={this.props.id} className={className} placeholder={this.props.placeholder} value={this.state.value || ""} onChange={this.onChange.bind(this)} />
     )
     let message = this.error()
     if (message) {

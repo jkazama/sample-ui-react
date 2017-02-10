@@ -24,7 +24,7 @@ const paths = {
 }
 const resource = {
   src: {
-    jade: `${paths.src.html}/**/*.jade`,
+    pug: `${paths.src.html}/**/*.pug`,
     webpack: {
       babel: `${paths.src.js}/**/*.(js|jsx)`
     },
@@ -32,11 +32,7 @@ const resource = {
     static: `${paths.src.static}/**/*`
   },
   vendor: {
-    js: {
-      jquery:       `${paths.node.modules}/jquery/dist/jquery.js`,
-      bootstrap:    `${paths.node.modules}/bootstrap-sass/assets/javascripts/bootstrap.js`,
-      eventemitter: `${paths.node.modules}/wolfy87-eventemitter/EventEmitter.js`
-    },
+    js: ['jquery', 'lodash', 'dateformat', "wolfy87-eventemitter", 'react', 'react-dom', "react-router", 'bootstrap-sass'],
     fontawesome: `${paths.node.modules}/font-awesome/fonts/**/*`
   }
 }
@@ -61,7 +57,7 @@ gulp.task('default', ['build', 'server'])
 
 //## build for developer
 gulp.task('build', (callback) =>
-  runSequence('clean', ['build:jade', 'build:sass', 'build:webpack', 'build:static'], callback)
+  runSequence('clean', ['build:pug', 'build:sass', 'build:webpack', 'build:static'], callback)
 )
 
 //## build production
@@ -85,13 +81,21 @@ gulp.task('revision', (callback) =>
 // compile Webpack [ ES6(Babel) / Vue -> SPA(main.js) ]
 gulp.task('build:webpack', () => {
   process.env.NODE_ENV = (production == true) ? 'production' : 'development'
-  let plugins = [ new webpack.optimize.DedupePlugin() ]
-  if (production) plugins.push(new webpack.optimize.UglifyJsPlugin({compress: { warnings: false　}}))
+  let plugins = [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
+    new webpack.ProvidePlugin({jQuery: "jquery", $: "jquery"})
+  ]
+  if (production) plugins.push(new webpack.optimize.UglifyJsPlugin({compress: { warnings: false　}, sourceMap: false }))
   return gulp.src(resource.src.webpack.babel)
     .pipe($.plumber())
     .pipe(webpackStream({
-      entry: `${paths.src.js}/main.js`,
-      output: {filename: 'bundler.js'},
+      devtool: '#source-map',
+      entry: {
+        app: `${paths.src.js}/main.js`,
+        vendor: resource.vendor.js
+      },
+      output: {filename: 'bundle.js'},
       watch: !production,
       module: {
         loaders: [
@@ -108,11 +112,11 @@ gulp.task('build:webpack', () => {
     .pipe(browserSync.stream())  
 })
 
-// compile Jade -> HTML
-gulp.task('build:jade', () => {
-  return gulp.src(resource.src.jade)
+// compile Pug -> HTML
+gulp.task('build:pug', () => {
+  return gulp.src(resource.src.pug)
     .pipe($.plumber())
-    .pipe($.jade())
+    .pipe($.pug())
     .pipe($.htmlhint())
     .pipe($.htmlhint.reporter())
     .pipe(gulp.dest(paths.dist.root))
@@ -132,11 +136,6 @@ gulp.task('build:sass', () => {
 
 // copy Static Resource
 gulp.task('build:static', () => {
-  const libs = resource.vendor.js
-  gulp.src(Object.keys(libs).map((key) => libs[key]))
-    .pipe($.concat("vendor.js"))
-    .pipe($.if(production, $.uglify()))
-    .pipe(gulp.dest(paths.dist.js))
   gulp.src(resource.vendor.fontawesome)
     .pipe(gulp.dest(paths.dist.font))
   return gulp.src(resource.src.static)

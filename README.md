@@ -17,12 +17,7 @@ sample-ui-react
 1. 「 `npm install -g gulp` 」 を実行して Gulp をインストール。
     - Mac ユーザは 「 `sudo npm install -g gulp` 」 で。
 1. コンソールで本ディレクトリ直下へ移動後、 「 `npm install` 」 を実行して Gulp ライブラリをインストール。
-    - Windows ユーザは 「 npm install --msvs_version=2013 」 。理由は後述
-
----
-
-標準で利用想定の [BrowserSync](http://www.browsersync.io/) は LiveReload よりも同期が早く開発生産性に大きく寄与しますが、 Windows ユーザの場合は [Python2.7](https://www.python.org/) と [Visual Studio 2013 Update N](https://www.visualstudio.com/downloads/download-visual-studio-vs) のインストールが必須となります。  
-*※ `Express 2013 for Desktop` を推奨します。 ( 手元で試したところ `Community 2015` では正しく動きませんでした ) *
+    - node-sass あたりでビルドに失敗した場合は、 「 `npm uninstall node-sass` 」 を実行してから再度試してみてください。
 
 ### 動作確認
 
@@ -33,17 +28,15 @@ sample-ui-react
     - application.yml の `extension.security.auth.enabled` を true にして起動すればログイン機能の確認も可能
 1. コンソールで本ディレクトリ直下へ移動し、 「 `gulp` 」 を実行
     - 確認用のブラウザが自動的に起動する。うまく起動しなかったときは 「 http://localhost:3000 」 へアクセス
-    - 画面が白く表示されてしまう時はブラウザの更新を押してみてください
-        - webpack のビルドが間に合っていない可能性が高いため
 
 ### 開発の流れ
 
-基本的にテンプレート ( .jade / .scss / .js ( ES6 ) ) を Web リソース ( .html / .css / .js ) へ Gulp / Webpack でリアルタイム変換させながら開発をしていきます。  
+基本的にテンプレート ( .pug / .scss / .js ( ES6 ) ) を Web リソース ( .html / .css / .js ) へ Gulp / Webpack でリアルタイム変換させながら開発をしていきます。  
 動作確認は Gulp で独自に Web サーバを立ち上げた後、ブラウザ上で行います。  
 
 #### 各種テンプレートファイルの解説
 
-- [Jade](http://jade-lang.com/)
+- [Pug](https://github.com/pugjs/pug)
     - HTML を生成するテンプレートツール。公式サイト TOP にある簡素な記法が特徴。
 - [Sass (SCSS)](http://sass-lang.com/)
     - CSS 表記を拡張するツール。変数や mixin 、ネスト表記などが利用可能。
@@ -88,8 +81,8 @@ public                               … deploy resources (auto generate)
     - style.css                      … from source/css
   fonts                              … icon font
   js
-    - bundler.js                     … from source/js (by Webpack)
-    - vendor.js                      … from vendor dist resource
+    - bundle.js                      … from source/js (by Webpack)
+    - vendor.bundle.js               … from vendor dist resource
   index.html                         … from source/html
 source
   css                                … css template files  [SCSS]
@@ -117,18 +110,18 @@ source
 
 | ライブラリ               | バージョン | 用途/追加理由 |
 | ----------------------- | -------- | ------------- |
-| `superagent`              | 1.7.+    | HTTP 連携ライブラリ |
-| `react`　　　　　　　　　　　　　　  | 0.14.+    | アプリケーションの UI 機能を提供 |
-| `react-dom`　　　　　　　　　　  | 0.14.+    | アプリケーションの UI 機能 ( DOM ) を提供 |
-| `react-router`           | 0.13.+    | React.js の SPA ルーティングサポート |
+| `superagent`             | 2.3.+    | HTTP 連携ライブラリ |
+| `react`　　　　　　　　　  | 15.4.+    | アプリケーションの UI 機能を提供 |
+| `react-dom`　　　　　　　  | 15.4.+    | アプリケーションの UI 機能 ( DOM ) を提供 |
+| `react-router`           | 3.0.+    | React.js の SPA ルーティングサポート |
 | `react-mixin`             | 3.0.+    | Reactクラス利用時のMixin拡張 |
-| `wolfy87-eventemitter`   | 4.3.+     | イベント連携ライブラリ |
-| `flux`                   | 2.1.+     | Facebook Flux ライブラリ |
-| `lodash` 　　　　　　　　　　　　  | 4.6.+    | 汎用ユーティリティライブラリ |
-| `dateformat`　　　　　　　　　  | 1.0.+    | 日時ライブラリ |
-| `jquery`                | 2.2.+     | DOM 操作サポート |
+| `wolfy87-eventemitter`   | 5.1.+     | イベント連携ライブラリ |
+| `flux`                   | 3.1.+     | Facebook Flux ライブラリ |
+| `lodash` 　　　　　　　　  | 4.17.+    | 汎用ユーティリティライブラリ |
+| `dateformat`　　　　　　  | 2.0.+    | 日時ライブラリ |
+| `jquery`                 | 3.1.+     | DOM 操作サポート |
 | `bootstrap-sass`         | 3.3.+    | CSS フレームワーク |
-| `fontawesome`             | 4.5.+    | フォントアイコンライブラリ |
+| `fontawesome`            | 4.6.+    | フォントアイコンライブラリ |
 
 ### License
 

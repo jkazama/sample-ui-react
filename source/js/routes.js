@@ -1,6 +1,5 @@
 import React from "react"
-import Router from "react-router"
-let {Route, DefaultRoute, NotFoundRoute} = Router
+import {Router, Route, IndexRoute} from 'react-router';
 
 import App from "app"
 import Login from "components/login"
@@ -11,14 +10,14 @@ import Asset from "components/asset"
 
 let Routes = function() {
   return (
-    <Route handler={App} path="/">
-      <Route name="login" handler={Login} />
-      <Route name="timeout" handler={Timeout} />
-      <Route name="top" handler={Top} />
-      <Route name="trade" handler={Trade} />
-      <Route name="asset" handler={Asset} />
-      <DefaultRoute handler={Login} />
-      <NotFoundRoute handler={Timeout}/>
+    <Route component={App} path="/">
+      <IndexRoute component={Login} />
+      <Route path="login" component={Login} />
+      <Route path="timeout" component={Timeout} />
+      <Route path="top" component={Top} />
+      <Route path="trade" component={Trade} />
+      <Route path="asset" component={Asset} />
+      <Route path='*' component={Timeout}/>
     </Route>
   )
 }
