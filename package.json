@@ -1,7 +1,7 @@
 {
   "name": "sample-ui-react",
-  "version": "0.3.1",
-  "description": "React.js Boilerplate",
+  "version": "0.4.0",
+  "description": "React.js / Redux Boilerplate",
   "main": "source/js/main.js",
   "scripts": {
     "start": "gulp",
