@@ -130,7 +130,10 @@ export class Ajax {
           Log.warn(xhr.statusText)
           break
         case 401:
-          Log.error('機能実行権限がありません')
+          Log.warn('機能実行権限がありません')
+          break
+        case 401:
+          Log.warn('機能実行権限がありません')
           break
         default:
           Log.error(xhr.statusText)
@@ -222,4 +225,9 @@ export class Utils {
     recurse(data, "")
     return ret
   }
+}
+
+// array to object[key: key]
+export function keyMirror(arrays) {
+  return arrays.reduce((obj, key) => {obj[key] = key; return obj}, {})
 }

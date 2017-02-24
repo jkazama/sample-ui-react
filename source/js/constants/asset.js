@@ -1,7 +1,5 @@
-import {KeyMirror} from "platform/react-flux"
-
-export default KeyMirror([
-  'FIND_CASH_IN_OUT',
-  'REQUEST_WITHDRAWAL'
+import { keyMirror } from "platform/plain"
+export default keyMirror([
+  'UPDATE_ASSET',
 ])
 

@@ -1,12 +1,27 @@
-import {ActionCreators} from "platform/react-flux"
-import ActionTypes from "constants/asset"
+import { Level } from "constants/plain"
+import { ActionsSupport } from "platform/redux-action-support"
+import api from "api/asset.js"
+import { handleFailure } from "actions/master.js"
+import types from "constants/asset"
 
-class AssetActionCreators extends ActionCreators {
-  findCashInOut() {
-    this.dispatch(ActionTypes.FIND_CASH_IN_OUT)
+export default class AssetActions extends ActionsSupport {
+  constructor(dispatch) {
+    super(dispatch)
   }
-  requestWithdrawal(data) {
-    this.dispatch(ActionTypes.REQUEST_WITHDRAWAL, data)
+
+  // 出金依頼をします。
+  findUnprocessedOut(success) {
+    api.findUnprocessedOut({}, list => {
+      success(list)
+    }, error => this.handleFailure(error))
+  }
+  // 未処理の出金情報を検索します。
+  requestWithdrawal(data, success) {
+    api.withdraw(data, id => {
+      const asset = {} //low: API経由で資産系サマリの再取得を行う
+      this.dispatch({type: types.UPDATE_ASSET, payload: asset})
+      this.emitMessage("出金依頼が完了しました", [], Level.INFO)
+      success(id)
+    }, error => this.handleFailure(error))
   }
 }
-export default new AssetActionCreators()

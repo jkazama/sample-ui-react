@@ -1,7 +1,6 @@
-import {KeyMirror} from "platform/react-flux"
-
-export default KeyMirror([
-  'CHECK_LOGIN',
-  'LOGIN',
-  'LOGOUT'
+import { keyMirror } from "platform/plain"
+export default keyMirror([
+  'UPDATE_MESSAGE',
+  'LOGINED',
+  'LOGOUT',
 ])

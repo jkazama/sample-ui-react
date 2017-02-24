@@ -15,8 +15,7 @@ const paths = {
   dist: {
     root: `${root.dist}`,
     js:   `${root.dist}/js`,
-    css:  `${root.dist}/css`,
-    font: `${root.dist}/fonts`
+    css:  `${root.dist}/css`
   },
   node: {
     modules: `${__dirname}/node_modules`
@@ -32,8 +31,7 @@ const resource = {
     static: `${paths.src.static}/**/*`
   },
   vendor: {
-    js: ['jquery', 'lodash', 'dateformat', "wolfy87-eventemitter", 'react', 'react-dom', "react-router", 'bootstrap-sass'],
-    fontawesome: `${paths.node.modules}/font-awesome/fonts/**/*`
+    js: ['lodash', 'dateformat', 'react', 'react-dom', 'react-redux', 'redux', 'react-router', 'react-router-redux', 'react-tap-event-plugin', 'material-ui']
   }
 }
 
@@ -84,7 +82,6 @@ gulp.task('build:webpack', () => {
   let plugins = [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js"),
-    new webpack.ProvidePlugin({jQuery: "jquery", $: "jquery"})
   ]
   if (production) plugins.push(new webpack.optimize.UglifyJsPlugin({compress: { warnings: false　}, sourceMap: false }))
   return gulp.src(resource.src.webpack.babel)
@@ -99,7 +96,7 @@ gulp.task('build:webpack', () => {
       watch: !production,
       module: {
         loaders: [
-          {test: /\.(js|jsx)$/, loader: 'babel', exclude: /node_modules/}
+          { test: /\.(js|jsx)$/, loader: 'babel', exclude: /node_modules/ }
         ]
       },
       resolve: {
@@ -136,8 +133,6 @@ gulp.task('build:sass', () => {
 
 // copy Static Resource
 gulp.task('build:static', () => {
-  gulp.src(resource.vendor.fontawesome)
-    .pipe(gulp.dest(paths.dist.font))
   return gulp.src(resource.src.static)
     .pipe(gulp.dest(paths.dist.root))
 })
@@ -149,7 +144,7 @@ gulp.task('server', () => {
     notify: false
   })
   // watch for source
-  gulp.watch(resource.src.jade,   ['build:jade'])
+  gulp.watch(resource.src.pug,   ['build:pug'])
   gulp.watch(resource.src.sass,   ['build:sass'])
   gulp.watch(resource.src.static, ['build:static'])
 })

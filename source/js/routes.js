@@ -1,24 +1,21 @@
 import React from "react"
 import {Router, Route, IndexRoute} from 'react-router';
 
-import App from "app"
-import Login from "components/login"
-import Timeout from "components/timeout"
-import Top from "components/top"
-import Trade from "components/trade"
-import Asset from "components/asset"
+import App from "container/app"
+import Login from "container/login"
+import Timeout from "container/timeout"
+import Top from "container/top"
+import Trade from "container/trade"
+import Asset from "container/asset"
 
-let Routes = function() {
-  return (
-    <Route component={App} path="/">
-      <IndexRoute component={Login} />
-      <Route path="login" component={Login} />
-      <Route path="timeout" component={Timeout} />
-      <Route path="top" component={Top} />
-      <Route path="trade" component={Trade} />
-      <Route path="asset" component={Asset} />
-      <Route path='*' component={Timeout}/>
-    </Route>
-  )
-}
-export default Routes()
+export default (
+  <Route path="/" component={App}>
+    <IndexRoute component={Top} />
+    <Route path="login" component={Login} />
+    <Route path="timeout" component={Timeout} />
+    <Route path="top" component={Top} />
+    <Route path="trade" component={Trade} />
+    <Route path="asset" component={Asset} />
+    <Route path='*' component={Timeout}/>
+  </Route>
+)
