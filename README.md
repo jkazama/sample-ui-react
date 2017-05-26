@@ -120,16 +120,16 @@ source
 
 | ライブラリ               | バージョン | 用途/追加理由 |
 | ----------------------- | -------- | ------------- |
-| `react`　　　　　　　　　  | 15.4.+    | アプリケーションの UI 機能を提供 |
-| `react-dom`　　　　　　　  | 15.4.+    | アプリケーションの UI 機能 ( DOM ) を提供 |
-| `react-router`           | 3.0.+    | React.js の SPA ルーティングサポート |
-| `react-tap-event-plugin` | 2.0.+    | タップ操作のサポート |
-| `redux`                 | 3.6.+     | Flux 風な状態/イベント概念をサポート |
-| `react-router-redux`    | 4.0.+     | Redux の状態モデルに対応した react-router |
-| `material-ui`            | 0.17.+    | マテリアルデザインな UI ライブラリ |
+| `react`　　　　　　　　　  | 15.5.+    | アプリケーションの UI 機能を提供 |
+| `react-dom`　　　　　　　  | 15.5.+    | アプリケーションの UI 機能 ( DOM ) を提供 |
+| `react-router`            | 3.0.+    | React.js の SPA ルーティングサポート |
+| `react-tap-event-plugin`  | 2.0.+    | タップ操作のサポート |
+| `redux`                   | 3.6.+     | Flux 風な状態/イベント概念をサポート |
+| `react-router-redux`      | 4.0.+     | Redux の状態モデルに対応した react-router |
+| `material-ui`             | 0.17.+    | マテリアルデザインな UI ライブラリ |
 | `lodash` 　　　　　　　　  | 4.17.+    | 汎用ユーティリティライブラリ |
-| `dateformat`　　　　　　  | 2.0.+    | 日時ライブラリ |
-| `superagent`             | 2.3.+    | HTTP 連携ライブラリ |
+| `dateformat`　　　　　　   | 2.0.+    | 日時ライブラリ |
+| `superagent`              | 3.5.+    | HTTP 連携ライブラリ |
 
 ### License
 
