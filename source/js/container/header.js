@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import PropTypes from 'prop-types'
 import { Component } from "platform/redux-support"
 import { Log } from "platform/plain"
 import { Level } from "constants/plain"
@@ -12,7 +13,7 @@ import { color, styleUiHeader } from "theme"
 class HeaderSubMenu extends React.Component {
   static muiName = "HeaderSubMenu"
   static propTypes = {
-    logout: React.PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
   }
   render() {
     return (
@@ -34,7 +35,7 @@ class HeaderSubMenu extends React.Component {
 class GlobalNotification extends React.Component {
   static muiName = "GlobalNotification"
   static propTypes = {
-    message: React.PropTypes.object.isRequired,
+    message: PropTypes.object.isRequired,
   }
   render() {
     const {level, message} = this.props.message

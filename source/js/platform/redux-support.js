@@ -32,7 +32,6 @@ export class Component extends ReactSupportComponent {
     const { columns } = this.props.master.message.default
     if (columns && 0 < columns.length) {
       let column = Array.from(columns).find(v => v.key === field)
-      console.log(column)
       if (column && column.values && 0 < column.values.length) {
         return column.values[0]
       }
