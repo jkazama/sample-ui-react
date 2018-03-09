@@ -76,14 +76,17 @@ gulp.task('revision', (callback) =>
   runSequence('revision:clean', 'revision:append', 'clean', 'revision:copy', 'revision:clean', callback)
 )
 
-// compile Webpack [ ES6(Babel) / Vue -> SPA(main.js) ]
+// compile Webpack [ ES201x(Babel) / Vue -> SPA(main.js) ]
 gulp.task('build:webpack', () => {
   process.env.NODE_ENV = (production == true) ? 'production' : 'development'
   let plugins = [
     new webpack.optimize.CommonsChunkPlugin({name: "vendor", filename: "vendor.bundle.js"}),
     new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)})
   ]
-  if (production) plugins.push(new webpack.optimize.UglifyJsPlugin({compress: { warnings: false　}, sourceMap: false }))
+  if (production) {
+    plugins.push(new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false 　} }))
+    plugins.push(new webpack.optimize.ModuleConcatenationPlugin())
+  }
   return gulp.src(resource.src.webpack.babel)
     .pipe($.plumber())
     .pipe(webpackStream({

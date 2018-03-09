@@ -6,15 +6,16 @@ import Header from "container/header"
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import theme from 'theme'
 
+import Routes from "routes"
+
 class App extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={theme}>
         <div>
           <Header />
-          {this.props.children}
+          {Routes}
         </div>
-        
       </MuiThemeProvider>
     )
   }

@@ -90,7 +90,7 @@ class Header extends Component {
         <div>
           <AppBar title="App"
             titleStyle={{fontSize: 18}}
-            onLeftIconButtonTouchTap={this.toggleGlobalMenu.bind(this)}
+            onLeftIconButtonClick={this.toggleGlobalMenu.bind(this)}
             iconElementRight={<HeaderSubMenu logout={this.logout.bind(this)} />}
             iconStyleRight={{marginRight: 0}}
             zDepth={0} />
@@ -101,9 +101,9 @@ class Header extends Component {
             <MenuItem onTouchTap={this.closeGlobalMenu.bind(this)}>Global Menu</MenuItem>
           </Drawer>
           <Tabs>
-            <Tab label="TOP" onActive={tab => this.push("top")} />
-            <Tab label="取引情報" onActive={tab => this.push("trade")} />
-            <Tab label="口座資産" onActive={tab => this.push("asset")} />
+            <Tab label="TOP" onActive={tab => this.push("/top")} />
+            <Tab label="取引情報" onActive={tab => this.push("/trade")} />
+            <Tab label="口座資産" onActive={tab => this.push("/asset")} />
           </Tabs>
           <GlobalNotification message={master.message.default.global || {}} />
         </div>
