@@ -1,4 +1,3 @@
-import { push } from 'react-router-redux'
 import { Log } from "platform/plain"
 import { Component as ReactSupportComponent } from "platform/react-support"
 import { Level } from 'constants/plain'
@@ -22,7 +21,11 @@ export class Component extends ReactSupportComponent {
     }
   }
   push(path) {
-    this.dispatch(push(path))
+    if (this.props.history.location.pathname === path) {
+        return
+    }
+    Log.info("Forward to " + path)
+    this.props.history.push(path)
   }
   clearMessage() {
     const { actionsMaster, master } = this.props
@@ -55,7 +58,7 @@ export class Component extends ReactSupportComponent {
   static mapStateToProps(mapper = state => ({})) {
     return state => {
       return Object.assign({
-        master: state.reducer.master,
+        master: state.master,
         router: state.router,
       }, mapper(state))
     }

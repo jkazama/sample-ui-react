@@ -1,9 +1,10 @@
 import React from "react"
+import { withRouter } from "react-router"
 import { connect } from "react-redux"
 import { Component } from "platform/redux-support"
 import { Log } from "platform/plain"
 
-import { Paper, TextField, RaisedButton } from "material-ui"
+import { Paper, TextField, Button } from "@material-ui/core"
 import { styleUi, styleUiLogin } from "theme"
 
 class Login extends Component {
@@ -35,27 +36,25 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <Paper style={styleUiLogin.main} zDepth={0}>
+        <Paper style={styleUiLogin.main}>
           <div>
-            <TextField floatingLabelText="ログインID" value={this.state.loginId} onChange={e => this.handleValue(e, 'loginId') } onKeyDown={this.handleEnterKey.bind(this)} />
+            <TextField label="ログインID" value={this.state.loginId} onChange={e => this.handleValue(e, 'loginId') } onKeyDown={this.handleEnterKey.bind(this)} />
           </div>
           <div>
-            <TextField type="password" floatingLabelText="パスワード" value={this.state.password} onChange={e => this.handleValue(e, 'password') } onKeyDown={this.handleEnterKey.bind(this)} />
+            <TextField type="password" label="パスワード" value={this.state.password} onChange={e => this.handleValue(e, 'password') } onKeyDown={this.handleEnterKey.bind(this)} />
           </div>
           <div>
-            <RaisedButton label="ログイン" primary={true} style={styleUiLogin.loginButton}
-              onClick={this.login.bind(this)} />
+            <Button style={styleUiLogin.loginButton} variant="contained" color="primary" onClick={e => this.login()}>ログイン</Button>
           </div>
         </Paper>
-        <Paper style={styleUi.alert.warning} zDepth={1}>
+        <Paper style={styleUi.alert.warning}>
           サーバ側（サンプル実装版）の認証モードを有効にした時は sample/sample でログインしてください。
         </Paper>
       </div>
     )
   }
 }
-
-export default connect(
+export default withRouter(connect(
   Login.mapStateToProps(),
   Login.mapDispatchToProps()
-)(Login)
+)(Login))

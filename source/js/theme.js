@@ -1,12 +1,23 @@
 
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-export default getMuiTheme({
-  spacing: {
-    desktopGutter: 12
+import { createMuiTheme } from '@material-ui/core/styles'
+export default createMuiTheme({
+  palette: {
   },
-  appBar: {
-    color: "#00b2ca",
-    height: 50
+  typography: {
+    useNextVariants: true,
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    fontSize: 14,
   },
 })
 
@@ -36,12 +47,6 @@ export const styleUi = {
   },
 }
 
-export const styleUiHeader = {
-  subMenu: {
-    menuItem: {fontSize: 14, margin: 0, padding: 0}
-  }
-}
-
 export const styleUiLogin = {
   main: {
     padding: 20,
@@ -56,9 +61,9 @@ export const styleUiAsset = {
     margin: "10px",
     padding: "0 20px 20px 20px",
   },
-  table: {
-    height: "400px"
+  requestWithdrawButton: {
+    verticalAlign: "top",
+    margin: "12px 0 0 12px",
   },
-  requestWithdrawButton: {verticalAlign: "top", margin: "24px 0 0 12px"},
   absAmountText: {marginLeft: 20},
 }

@@ -1,25 +1,23 @@
 import React from "react"
 import { render } from "react-dom"
-import { Route } from 'react-router-dom';
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { Route } from 'react-router-dom'
+import { applyMiddleware, compose, createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
 import createHistory from 'history/createHashHistory'
 
-import reducer from 'reducers'
+import createRootReducer from 'reducers'
 
 const history = createHistory()
-const middleware = routerMiddleware(history)
 const store = createStore(
-  combineReducers({
-    reducer,
-    router: routerReducer
-  }),
-  applyMiddleware(middleware)
+  createRootReducer(history),
+  {},
+  compose(
+    applyMiddleware(
+      routerMiddleware(history),
+    ),
+  ),
 )
-
-import injectTapEventPlugin from 'react-tap-event-plugin'
-injectTapEventPlugin()
 
 import App from 'container/app'
 render(

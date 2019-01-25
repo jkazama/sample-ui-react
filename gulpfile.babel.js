@@ -31,14 +31,13 @@ const resource = {
     static: `${paths.src.static}/**/*`
   },
   vendor: {
-    js: ['lodash', 'dateformat', 'react', 'react-dom', 'react-redux', 'redux', 'react-router', 'react-router-redux', 'react-tap-event-plugin', 'material-ui']
+    js: ['lodash', 'dateformat', 'react', 'react-dom', 'react-redux', 'redux', 'react-router', '@material-ui/core']
   }
 }
 
 import gulp from 'gulp'
 import gulpLoaderPlugins from 'gulp-load-plugins'
 import del from 'del'
-import path from 'path'
 import webpack from 'webpack'
 import webpackStream from 'webpack-stream'
 import runSequence from 'run-sequence'
@@ -46,7 +45,7 @@ import browserSyncTool from 'browser-sync'
 import RevAll from 'gulp-rev-all'
 
 const $ = gulpLoaderPlugins()
-const browserSync   = browserSyncTool.create()
+const browserSync = browserSyncTool.create()
 
 let production = false
 
@@ -55,7 +54,7 @@ gulp.task('default', ['build', 'server'])
 
 //## build for developer
 gulp.task('build', (callback) =>
-  runSequence('clean', ['build:pug', 'build:sass', 'build:webpack', 'build:static'], callback)
+  runSequence('clean', ['build:pug', 'build:sass', 'build:static', 'build:webpack'], callback)
 )
 
 //## build production
@@ -78,28 +77,30 @@ gulp.task('revision', (callback) =>
 
 // compile Webpack [ ES201x(Babel) / Vue -> SPA(main.js) ]
 gulp.task('build:webpack', () => {
-  process.env.NODE_ENV = (production == true) ? 'production' : 'development'
-  let plugins = [
-    new webpack.optimize.CommonsChunkPlugin({name: "vendor", filename: "vendor.bundle.js"}),
-    new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)})
+  process.env.NODE_ENV = production ? 'production' : 'development'
+  const plugins = [
+    new webpack.ProvidePlugin({ jQuery: "jquery", $: "jquery" }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) }),
   ]
-  if (production) {
-    plugins.push(new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false 　} }))
-    plugins.push(new webpack.optimize.ModuleConcatenationPlugin())
-  }
   return gulp.src(resource.src.webpack.babel)
     .pipe($.plumber())
     .pipe(webpackStream({
-      devtool: '#source-map',
+      mode: process.env.NODE_ENV,
+      devtool: production ? false : '#source-map',
       entry: {
-        app: `${paths.src.js}/main.js`,
+        main: `${paths.src.js}/main.js`,
         vendor: resource.vendor.js
       },
-      output: {filename: 'bundle.js'},
+      output: { filename: '[name].bundle.js' },
+      optimization: {
+        splitChunks: { name: 'vendor', chunks: 'initial' },
+        noEmitOnErrors: true,
+      },
       watch: !production,
       module: {
         rules: [
-          { test: /\.(js|jsx)$/, loader: 'babel-loader', exclude: /node_modules/ }
+          { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
         ]
       },
       resolve: {
@@ -120,8 +121,6 @@ gulp.task('build:pug', () => {
   return gulp.src(resource.src.pug)
     .pipe($.plumber())
     .pipe($.pug())
-    .pipe($.htmlhint())
-    .pipe($.htmlhint.reporter())
     .pipe(gulp.dest(paths.dist.root))
     .pipe(browserSync.stream())  
 })
@@ -130,9 +129,8 @@ gulp.task('build:pug', () => {
 gulp.task('build:sass', () => {
   return gulp.src(resource.src.sass)
     .pipe($.plumber())
-    .pipe($.sass())
     .pipe($.concat('style.css'))
-    .pipe($.pleeease())
+    .pipe($.sass({ outputStyle: 'compressed' }))
     .pipe(gulp.dest(paths.dist.css))
     .pipe(browserSync.stream())
 })

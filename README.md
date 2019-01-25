@@ -91,7 +91,7 @@ public                               … deploy resources (auto generate)
     - style.css                      … from source/css
   fonts                              … icon font
   js
-    - bundle.js                      … from source/js (by Webpack)
+    - main.bundle.js                 … from source/js (by Webpack)
     - vendor.bundle.js               … from vendor dist resource
   index.html                         … from source/html
 source
@@ -120,16 +120,11 @@ source
 
 | ライブラリ               | バージョン | 用途/追加理由 |
 | ----------------------- | -------- | ------------- |
-| `react`　　　　　　　　　  | 16.2.+    | アプリケーションの UI 機能を提供 |
-| `react-dom`　　　　　　　  | 16.2.+    | アプリケーションの UI 機能 ( DOM ) を提供 |
-| `react-router-dom`        | 4.2.+    | React.js の SPA ルーティングサポート |
-| `react-tap-event-plugin`  | 3.0.+    | タップ操作のサポート |
-| `redux`                   | 3.7.+     | Flux 風な状態/イベント概念をサポート |
-| `react-router-redux`      | 5.0.+     | Redux の状態モデルに対応した react-router |
-| `material-ui`             | 0.18.+    | マテリアルデザインな UI ライブラリ |
-| `lodash` 　　　　　　　　  | 4.17.+    | 汎用ユーティリティライブラリ |
-| `dateformat`　　　　　　   | 3.0.+    | 日時ライブラリ |
-| `superagent`              | 3.8.+    | HTTP 連携ライブラリ |
+| `react`　　　　　　　　　  | 16.7.+    | アプリケーションの UI 機能を提供 |
+| `redux`                   | 4.0.+     | Flux 風な状態/イベント概念をサポート |
+| `material-ui`             | 3.9.+    | マテリアルデザインな UI ライブラリ |
+
+※ 詳細は package.json を参照してください
 
 ### License
 

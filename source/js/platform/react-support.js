@@ -1,5 +1,4 @@
 import React from "react"
-import { findDOMNode } from "react-dom"
 
 export class Component extends React.Component {
   constructor(props, context) {
@@ -7,13 +6,13 @@ export class Component extends React.Component {
     this.state = Object.assign({}, this.initState())
     this.initialize()
   }
-  initState() { return {} }
+  initState(state, props) { return {} }
   initialize() { /* nothing. */ }
   mergeState(data = {}) {
-    this.setState(Object.assign({}, this.state, data))
+    this.setState((state, props) => Object.assign({}, state, data))
   }
   clearState() {
-    this.setState(Object.assign({}, this.initState()))
+    this.setState((state, props) => Object.assign({}, this.initState(state, props)))
   }
   handleValue(e, key) {
     this.mergeState({[key]: e.target.value})

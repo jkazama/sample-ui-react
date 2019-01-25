@@ -1,11 +1,12 @@
 import React from "react"
+import { withRouter } from "react-router"
 import { connect } from "react-redux"
 import { Component } from "platform/redux-support"
 import AssetActions from "actions/asset"
 import {
-  Paper, TextField, RaisedButton,
-  Table, TableHeader, TableBody, TableRow, TableHeaderColumn, TableRowColumn,
-} from "material-ui"
+  Paper, TextField, Button,
+  Table, TableHead, TableBody, TableRow, TableCell,
+} from "@material-ui/core"
 import { styleUi, styleUiAsset } from "theme"
 
 class Asset extends Component {
@@ -36,34 +37,38 @@ class Asset extends Component {
     }
   }
   render() {
+    const errAbsAmount = this.errorText("absAmount")
     return (
       <div>
-        <TextField floatingLabelText="出金金額"
-          value={this.state.absAmount || ""} errorText={this.errorText("absAmount")}
+        <TextField label="出金金額"
+          margin='dense'
+          value={this.state.absAmount || ""} error={errAbsAmount !== ""}
+          helperText={errAbsAmount}
           style={styleUiAsset.absAmountText}
           onChange={e => this.handleValue(e, 'absAmount') }
-          onKeyDown={this.handleEnterKey.bind(this)} />
-        <RaisedButton label="出金依頼をする"
-          primary={true} style={styleUiAsset.requestWithdrawButton}
-          onClick={this.requestWithdraw.bind(this)} />
-        <Paper style={styleUiAsset.main} zDepth={1}>
-          <Table selectable={false} height={styleUiAsset.table.height}>
-            <TableHeader displaySelectAll={false}>
+          onKeyDown={e => this.handleEnterKey(e)} />
+        <Button variant="contained" color="primary" style={styleUiAsset.requestWithdrawButton}
+          onClick={() => this.requestWithdraw()}>
+          出金依頼をする
+        </Button>
+        <Paper style={styleUiAsset.main}>
+          <Table>
+            <TableHead>
               <TableRow>
-                <TableHeaderColumn>依頼日</TableHeaderColumn>
-                <TableHeaderColumn>ステータス</TableHeaderColumn>
-                <TableHeaderColumn>通貨</TableHeaderColumn>
-                <TableHeaderColumn>金額</TableHeaderColumn>
+                <TableCell>依頼日</TableCell>
+                <TableCell>ステータス</TableCell>
+                <TableCell>通貨</TableCell>
+                <TableCell>金額</TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false}>
+            </TableHead>
+            <TableBody>
               {this.state.withdrawalList.map((item, i) =>
-                <TableRow key={i}>
-                  <TableRowColumn style={styleUi.alignCenter}>{item.requestDay}</TableRowColumn>
-                  <TableRowColumn style={styleUi.alignCenter}>{item.statusType}</TableRowColumn>
-                  <TableRowColumn style={styleUi.alignCenter}>{item.currency}</TableRowColumn>
-                  <TableRowColumn style={styleUi.alignRight}>{item.absAmount}</TableRowColumn>
-                </TableRow>
+              <TableRow key={i}>
+                <TableCell style={styleUi.alignCenter}>{item.requestDay}</TableCell>
+                <TableCell style={styleUi.alignCenter}>{item.statusType}</TableCell>
+                <TableCell style={styleUi.alignCenter}>{item.currency}</TableCell>
+                <TableCell style={styleUi.alignRight}>{item.absAmount}</TableCell>
+              </TableRow>
               )}
             </TableBody>
           </Table>
@@ -72,11 +77,11 @@ class Asset extends Component {
     )
   }
 }
-export default connect(
+export default withRouter(connect(
   Asset.mapStateToProps(state => ({
-    asset: state.reducer.asset
+    asset: state.asset
   })),
   Asset.mapDispatchToProps(dispatch => ({
     actionsAsset: new AssetActions(dispatch)
   })),
-)(Asset)
+)(Asset))
