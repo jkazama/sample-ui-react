@@ -52,8 +52,8 @@
     "redux-devtools": "~3.5.0",
     "run-sequence": "~2.2.0",
     "sass-loader": "~7.1.0",
-    "webpack": "~4.19.0",
-    "webpack-bundle-analyzer": "~3.0.0",
-    "webpack-stream": "~5.1.0"
+    "webpack": "~4.32.0",
+    "webpack-bundle-analyzer": "~3.3.2",
+    "webpack-stream": "~5.2.0"
   }
 }
