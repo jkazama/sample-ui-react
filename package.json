@@ -1,6 +1,6 @@
 {
   "name": "sample-ui-react",
-  "version": "16.7.0",
+  "version": "16.8.0",
   "description": "React.js / Redux Boilerplate",
   "main": "source/js/main.js",
   "scripts": {
@@ -20,8 +20,8 @@
     "dateformat": "~3.0.0",
     "lodash": "~4.17.0",
     "prop-types": "~15.6.0",
-    "react": "~16.7.0",
-    "react-dom": "~16.7.0",
+    "react": "~16.8.0",
+    "react-dom": "~16.8.0",
     "react-redux": "~6.0.0",
     "react-router-dom": "~4.3.0",
     "redux": "~4.0.0",
@@ -35,7 +35,7 @@
     "babel-preset-react": "~6.24.0",
     "babel-preset-stage-0": "~6.24.0",
     "babel-runtime": "~6.26.0",
-    "browser-sync": "~2.24.0",
+    "browser-sync": "~2.26.0",
     "css-loader": "~1.0.0",
     "del": "~3.0.0",
     "gulp": "~3.9.0",
