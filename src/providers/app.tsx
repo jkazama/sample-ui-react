@@ -1,8 +1,10 @@
+import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toaster";
+import { RotateCcw } from "lucide-react";
 import { ReactNode, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { HashRouter as Router } from "react-router-dom";
-import { RecoilRoot } from "recoil";
-import { Button } from "@/components/elements/button";
+import { QueryProvider } from "./query";
 
 const ErrorFallback = () => {
   return (
@@ -10,12 +12,11 @@ const ErrorFallback = () => {
       className="text-red-500 w-screen h-screen flex flex-col justify-center items-center"
       role="alert"
     >
-      <h2 className="text-lg font-semibold">Ooops, something went wrong :( </h2>
-      <Button
-        className="mt-4"
-        onClick={() => window.location.assign(window.location.origin)}
-      >
-        Refresh
+      <h2 className="text-lg font-semibold mb-2">
+        Ooops, something went wrong
+      </h2>
+      <Button onClick={() => window.location.assign(window.location.origin)}>
+        Reload
       </Button>
     </div>
   );
@@ -26,11 +27,20 @@ type AppProviderProps = {
 };
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <Suspense>
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center w-screen h-screen">
+          <RotateCcw className="animate-spin" />
+        </div>
+      }
+    >
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <RecoilRoot>
-          <Router>{children}</Router>
-        </RecoilRoot>
+        <QueryProvider>
+          <Router>
+            <div>{children}</div>
+            <Toaster />
+          </Router>
+        </QueryProvider>
       </ErrorBoundary>
     </Suspense>
   );
