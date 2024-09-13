@@ -1,7 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Coins, Landmark, NotebookText } from "lucide-react";
 import { useState } from "react";
+import { AssetCashflow } from "./AssetCashflow";
 import { AssetDeposit } from "./AssetDeposit";
+import { AssetWithdraw } from "./AssetWithdraw";
 
 export const AssetHome = () => {
   const [tabIndex, setTabIndex] = useState("cashflow");
@@ -22,11 +24,15 @@ export const AssetHome = () => {
             Withdraw
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="cashflow">TBD: Cashflow</TabsContent>
+        <TabsContent value="cashflow">
+          <AssetCashflow />
+        </TabsContent>
         <TabsContent value="deposit">
           <AssetDeposit />
         </TabsContent>
-        <TabsContent value="withdraw">TBD: Withdraw</TabsContent>
+        <TabsContent value="withdraw">
+          <AssetWithdraw />
+        </TabsContent>
       </Tabs>
     </div>
   );

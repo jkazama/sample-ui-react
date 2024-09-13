@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export const AssetDeposit = ({ className }: { className?: string }) => {
+export const AssetCashflow = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(

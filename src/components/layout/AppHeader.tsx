@@ -1,6 +1,6 @@
 import { useAuth, useMessage } from "@/hooks";
 import { cn } from "@/lib/utils";
-import { actorRoleType } from "@/types/i18n";
+import { actorRoleTypeStr } from "@/types/i18n";
 import {
   Banknote,
   CandlestickChart,
@@ -22,7 +22,7 @@ import {
 
 export const AppHeader = () => {
   const { notify } = useMessage();
-  const { logined, user, isAdmin, logout } = useAuth();
+  const { logined, user, logout } = useAuth();
   const navStyle = "flex items-center h-8 px-8 space-x-1";
   const handleLogout = async () => {
     await logout();
@@ -82,7 +82,7 @@ export const AppHeader = () => {
       {logined && (
         <div className="flex items-center space-x-2 px-2">
           <div>
-            <Badge variant={"outline"}>{actorRoleType(user.roleType)}</Badge>
+            <Badge variant={"outline"}>{actorRoleTypeStr(user.roleType)}</Badge>
           </div>
           <div>{user.name}</div>
           <div>

@@ -3,7 +3,7 @@ import { ActionStatusType } from "@/types";
 export type UserCashOut = {
   cashInOutId: string;
   currency: string;
-  absAmount: string;
+  absAmount: number;
   requestDay: string;
   requestDate: string;
   eventDay: string;
@@ -15,5 +15,5 @@ export type UserCashOut = {
 
 export type UserRegCashOut = {
   currency: string;
-  absAmount: string;
+  absAmount: number;
 };

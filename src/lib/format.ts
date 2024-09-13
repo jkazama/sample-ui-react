@@ -1,4 +1,4 @@
-export const formatAmount = (v: string): string => {
+export const formatAmount = (v: string | number): string => {
   if (v) {
     return v.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
   } else if (v === "0") {
